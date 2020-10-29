@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="8dp" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/folder_desc"
+        android:src="@drawable/ic_folder_black_24dp" />
+
+    <TextView
+        android:id="@+id/folder_item_title"
+        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:text="文件夹"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+
+
+
+</LinearLayout>

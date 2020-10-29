@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Note</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="confirm_password_hint">确认密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="login_text">登录</string>
+    <string name="register_text">注册</string>
+    <string name="back_text">返回</string>
+    <string name="title_activity_main">Note</string>
+    <string name="title_files">文档</string>
+    <string name="title_folder">文件夹</string>
+    <string name="title_mine">我的</string>
+    <string name="folder_desc">文件夹</string>
+    <string name="file_desc">文件</string>
+</resources>
