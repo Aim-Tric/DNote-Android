@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_file" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="top.devonte.note.activity.ui.folder.FolderFragment"
-        android:label="@string/title_folder"
-        tools:layout="@layout/fragment_folder" />
-
-    <fragment
         android:id="@+id/navigation_notifications"
         android:name="top.devonte.note.activity.ui.user.UsersFragment"
         android:label="@string/title_mine"

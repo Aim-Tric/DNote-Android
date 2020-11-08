@@ -1,4 +1,4 @@
-package top.devonte.note.base;
+package top.devonte.note.component;
 
 import android.content.Context;
 import android.util.AttributeSet;

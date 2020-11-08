@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_file_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="8dp">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:contentDescription="@string/file_desc"
         android:src="@drawable/ic_assignment_black_24dp" />
 
@@ -27,9 +28,8 @@
                 android:id="@+id/file_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
                 android:maxLength="10"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -40,7 +40,6 @@
                 android:id="@+id/file_item_created"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2020.01.01"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +49,6 @@
             android:id="@+id/file_item_brief"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
             android:maxLines="1" />
 
     </LinearLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,19 +17,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.shehuan.niv.NiceImageView
                 android:id="@+id/home_user_avatar"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:contentDescription="头像"
-                android:src="@drawable/ic_dashboard_black_24dp" />
+                android:src="@drawable/cat"
+                app:border_color="#ECECEC"
+                app:border_width="3dp"
+                app:is_circle="true" />
 
             <TextView
                 android:id="@+id/home_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:text="用户名" />
+                android:text="用户名"
+                android:textSize="24dp" />
 
         </LinearLayout>
 
@@ -38,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="已使用 36 天"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            tools:ignore="RtlCompat" />
 
     </LinearLayout>
 
@@ -63,12 +69,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_insert_drive_file_black_24dp" />
+                android:src="@drawable/ic_file_analytic" />
 
             <TextView
+                android:id="@+id/analytic_file_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="32"
+                android:text="0"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -83,32 +90,14 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_insert_drive_file_black_24dp" />
+                android:contentDescription="@string/folder_count_desc"
+                android:src="@drawable/ic_folder_analytic" />
 
             <TextView
+                android:id="@+id/analytic_folder_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="32"
-                android:textAlignment="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_insert_drive_file_black_24dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="32"
+                android:text="0"
                 android:textAlignment="center" />
 
         </LinearLayout>

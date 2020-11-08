@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="@string/title_hint"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <com.yuruiyin.richeditor.RichEditText
+        android:id="@+id/edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:gravity="top|start"
+        android:hint="@string/input_hint"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="5dp"
+        android:maxLength="20000"
+        android:minHeight="350dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="23dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="70dp"
+        android:textColor="#171717"
+        android:textColorHint="#aaaaaa"
+        android:textCursorDrawable="@null"
+        android:textSize="16sp"
+        app:editor_image_radius="3dp"
+        app:editor_show_gif_mark="true"
+        app:editor_show_long_image_mark="true"
+        app:editor_show_video_mark="true" />
+
+</LinearLayout>

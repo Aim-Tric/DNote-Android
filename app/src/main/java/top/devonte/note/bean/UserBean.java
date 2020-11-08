@@ -9,6 +9,7 @@ public class UserBean {
     private String password;
     private String idNumber;
     private String realName;
+    private String nickName;
     private String phone;
     private Date created;
     private Date updated;
@@ -75,5 +76,13 @@ public class UserBean {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

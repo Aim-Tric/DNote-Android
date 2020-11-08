@@ -17,14 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username_hint"
-        android:inputType="text" />
+        android:inputType="text"
+        android:maxLength="20" />
 
     <EditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:maxLength="20" />
 
     <Button
         android:id="@+id/login_login_button"
@@ -35,25 +37,25 @@
         android:textColor="@color/colorWhite" />
 
     <RelativeLayout
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/login_forget_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/forget_password"
-            android:background="@color/colorTransparent"/>
+            android:background="@color/colorTransparent"
+            android:text="@string/forget_password" />
 
         <Button
             android:id="@+id/login_register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register_text"
             android:layout_alignParentEnd="true"
-            android:background="@color/colorTransparent"/>
+            android:background="@color/colorTransparent"
+            android:text="@string/register_text" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -13,4 +13,12 @@
     <string name="title_mine">我的</string>
     <string name="folder_desc">文件夹</string>
     <string name="file_desc">文件</string>
+    <string name="menu_add_file">添加文档</string>
+    <string name="menu_add_folder">添加文件夹</string>
+    <string name="phone_hint">手机号</string>
+    <string name="nickname_hint">昵称</string>
+    <string name="folder_count_desc">文件夹数</string>
+    <string name="title_hint">标题</string>
+    <string name="input_hint">请输入...</string>
+    <string name="menu_save">保存</string>
 </resources>

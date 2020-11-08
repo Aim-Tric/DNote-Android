@@ -9,8 +9,8 @@ public class FileBean {
     private String title;
     private int type;
     private String body;
-    private boolean isTopping;
-    private boolean isFolder;
+    private boolean topping;
+    private boolean foldered;
     private Date created;
     private Date updated;
     private Date topped;
@@ -56,19 +56,19 @@ public class FileBean {
     }
 
     public boolean isTopping() {
-        return isTopping;
+        return topping;
     }
 
     public void setTopping(boolean topping) {
-        isTopping = topping;
+        this.topping = topping;
     }
 
-    public boolean isFolder() {
-        return isFolder;
+    public boolean isFoldered() {
+        return foldered;
     }
 
-    public void setFolder(boolean folder) {
-        isFolder = folder;
+    public void setFoldered(boolean foldered) {
+        this.foldered = foldered;
     }
 
     public Date getCreated() {

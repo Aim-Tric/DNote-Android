@@ -12,22 +12,18 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 
-public abstract class BaseCallBack implements Callback {
+public abstract class BaseCallBack<T extends IPresenter.IView> implements Callback {
 
-    private Context context;
+    private T view;
 
-    public BaseCallBack(Context context) {
-        this.context = context;
+    public BaseCallBack() {}
+
+    public BaseCallBack(T view) {
+        this.view = view;
     }
 
     @Override
     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-        Log.d("BASE", e.getMessage());
-        Looper.prepare();
-        Toast.makeText(context,
-                e.getMessage(),
-                Toast.LENGTH_LONG)
-                .show();
-        Looper.loop();
+        view.toast(e.getMessage());
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/file_detail_layout"
     android:padding="8dp"
     android:orientation="vertical"
     tools:context=".activity.FileDetailActivity">
@@ -13,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="title"
+        android:gravity="center"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/file_detail_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"/>
+        android:padding="8dp"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

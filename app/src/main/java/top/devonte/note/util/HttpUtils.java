@@ -2,6 +2,8 @@ package top.devonte.note.util;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,7 +27,6 @@ import top.devonte.note.constant.ApiConstants;
 public class HttpUtils {
 
     private static final String TAG = "HttpUtils";
-
 
     public static OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(1000 * 10, TimeUnit.SECONDS)
@@ -85,17 +86,17 @@ public class HttpUtils {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void put(String url, Map<String, String> formBodyMap, Callback callback) {
+    public static void put(String url, String json, Callback callback) {
         Request request = new Request.Builder()
-                .put(buildBody(formBodyMap))
+                .put(FormBody.create(json, MEDIA_TYPE_JSON))
                 .url(url)
                 .build();
         client.newCall(request).enqueue(callback);
     }
 
-    public static void delete(String url, Map<String, String> formBodyMap, Callback callback) {
+    public static void delete(String url, Callback callback) {
         Request request = new Request.Builder()
-                .delete(buildBody(formBodyMap))
+                .delete()
                 .url(url)
                 .build();
         client.newCall(request).enqueue(callback);

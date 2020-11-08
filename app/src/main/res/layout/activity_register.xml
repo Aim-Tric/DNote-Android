@@ -13,24 +13,47 @@
         android:textAlignment="center"/>
 
     <EditText
+        android:id="@+id/register_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="20"
         android:hint="@string/username_hint"
         android:inputType="text"/>
 
     <EditText
+        android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="20"
         android:hint="@string/password_hint"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/register_check_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="20"
+        android:hint="@string/confirm_password_hint"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/register_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone_hint"
+        android:maxLength="11"
         android:inputType="text"/>
 
     <EditText
+        android:id="@+id/register_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/confirm_password_hint"
+        android:maxLength="20"
+        android:hint="@string/nickname_hint"
         android:inputType="text"/>
 
     <Button
+        android:id="@+id/register_register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register_text"
