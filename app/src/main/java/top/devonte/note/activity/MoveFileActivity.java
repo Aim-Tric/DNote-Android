@@ -144,7 +144,7 @@ public class MoveFileActivity extends AppCompatActivity {
                 ResultBean result = JSON.parseObject(jsonStr, ResultBean.class);
                 toast(result.getMsg());
                 if (result.getCode() == 10000) {
-                    finishActivity(1);
+                    setResult(1);
                 }
                 finish();
             }

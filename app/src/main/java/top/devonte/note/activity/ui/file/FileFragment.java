@@ -290,6 +290,7 @@ public class FileFragment extends BaseFragment<FilePresenter> implements IFileLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, String.valueOf(resultCode));
         if (resultCode == 1) {
             presenter.initData();
         }

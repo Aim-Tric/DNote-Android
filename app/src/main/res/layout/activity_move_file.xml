@@ -21,6 +21,7 @@
             android:id="@+id/move_file_selected_path"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:text="当前位置: 根目录"
             android:layout_columnWeight="1" />
 
         <Button
