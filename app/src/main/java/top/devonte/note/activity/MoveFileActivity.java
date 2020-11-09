@@ -18,11 +18,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +37,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.devonte.note.R;
 import top.devonte.note.bean.FileBean;
+import top.devonte.note.bean.ResultBean;
 import top.devonte.note.constant.ApiConstants;
 import top.devonte.note.constant.Constants;
 import top.devonte.note.util.HttpUtils;
@@ -64,7 +69,7 @@ public class MoveFileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long id = intent.getLongExtra("id", -1);
         currentFolder = intent.getIntExtra("folderId", 0);
-        history.add(currentFolder);
+        history.add(0);
         if (id == -1) {
             Toast.makeText(this, "invalid params", Toast.LENGTH_SHORT).show();
         }
@@ -91,26 +96,31 @@ public class MoveFileActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response)
                     throws IOException {
                 String jsonStr = response.body().string();
-                List<FileBean> resultBean = JSON.parseArray(jsonStr, FileBean.class);
-                LinkedList<FileBean> newResultBean = new LinkedList<>();
-                if (history.size() > 0) {
-                    if (folderId == history.getLast()) {
-                        history.pollLast();
-                    } else if (currentFolder != 0) {
-                        history.addLast(currentFolder);
+                ResultBean result = JSON.parseObject(jsonStr, ResultBean.class);
+                if (result.getCode() == 10000) {
+                    List<FileBean> resultBean = ((JSONArray) result.getData()).toJavaList(FileBean.class);
+                    LinkedList<FileBean> newResultBean = new LinkedList<>();
+                    if (folderId > 0) {
+                        if (history.size() > 0) {
+                            if (folderId == history.getLast()) {
+                                history.pollLast();
+                            } else if (currentFolder != 0) {
+                                history.addLast(currentFolder);
+                            }
+                        }
+                        FileBean goBack = new FileBean();
+                        goBack.setTitle("返回上一级");
+                        goBack.setFoldered(true);
+                        goBack.setId(history.getLast());
+                        newResultBean.add(goBack);
                     }
+                    currentFolder = folderId;
+                    newResultBean.addAll(resultBean);
+                    folders = newResultBean;
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
+                } else {
+                    toast(result.getMsg());
                 }
-                currentFolder = folderId;
-                if (folderId > 0) {
-                    FileBean goBack = new FileBean();
-                    goBack.setTitle("返回上一级");
-                    goBack.setFoldered(true);
-                    goBack.setId(history.getLast());
-                    newResultBean.add(goBack);
-                }
-                newResultBean.addAll(resultBean);
-                folders = newResultBean;
-                runOnUiThread(() -> adapter.notifyDataSetChanged());
             }
         });
     }
@@ -130,14 +140,20 @@ public class MoveFileActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String data = response.body().string();
-                runOnUiThread(()
-                        -> Toast.makeText(MoveFileActivity.this,
-                        data, Toast.LENGTH_SHORT).show());
-                finishActivity(0);
+                String jsonStr = response.body().string();
+                ResultBean result = JSON.parseObject(jsonStr, ResultBean.class);
+                toast(result.getMsg());
+                if (result.getCode() == 10000) {
+                    finishActivity(1);
+                }
                 finish();
             }
         });
+    }
+
+    private void toast(String msg) {
+        runOnUiThread(() -> Toast.makeText(MoveFileActivity.this,
+                msg, Toast.LENGTH_SHORT).show());
     }
 
     private class ListAdapter extends BaseAdapter {

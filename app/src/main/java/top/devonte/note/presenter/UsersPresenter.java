@@ -1,6 +1,5 @@
 package top.devonte.note.presenter;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import org.jetbrains.annotations.NotNull;

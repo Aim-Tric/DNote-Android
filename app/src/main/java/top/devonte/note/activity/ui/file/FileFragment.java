@@ -282,7 +282,7 @@ public class FileFragment extends BaseFragment<FilePresenter> implements IFileLi
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             Intent intent = new Intent(getActivity(), MoveFileActivity.class);
             intent.putExtra("id", itemId);
-            intent.putExtra("folderId", presenter.getCurrentFolder());
+            intent.putExtra("folderId", 0);
             startActivityForResult(intent, 0);
         });
     }
@@ -290,7 +290,7 @@ public class FileFragment extends BaseFragment<FilePresenter> implements IFileLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 0) {
+        if (resultCode == 1) {
             presenter.initData();
         }
     }

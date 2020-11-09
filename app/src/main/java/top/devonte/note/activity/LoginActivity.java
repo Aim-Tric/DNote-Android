@@ -27,7 +27,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.devonte.note.R;
 import top.devonte.note.bean.ResultBean;
-import top.devonte.note.bean.UserBean;
 import top.devonte.note.constant.ApiConstants;
 import top.devonte.note.util.HttpUtils;
 
@@ -65,43 +64,41 @@ public class LoginActivity extends AppCompatActivity {
             HttpUtils.post(ApiConstants.LOGIN_API, data, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(LoginActivity.this,
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                    toast(e.getMessage());
                 }
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     String jsonStr = Objects.requireNonNull(response.body()).string();
                     ResultBean resultBean = JSON.parseObject(jsonStr, ResultBean.class);
-                    HttpUtils.get(ApiConstants.AUTH_INFO_API, new Callback() {
+                    if (resultBean.getCode() == 10000) {
+                        HttpUtils.get(ApiConstants.AUTH_INFO_API, new Callback() {
 
-                        @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                            String json = response.body().string();
-                            SharedPreferences noteuser = getSharedPreferences("NOTE", MODE_PRIVATE);
-                            SharedPreferences.Editor edit = noteuser.edit();
-                            edit.putString("userInfo", json);
-                            edit.apply();
-                        }
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                String json = response.body().string();
+                                ResultBean resultBean = JSON.parseObject(json, ResultBean.class);
+                                if (resultBean.getCode() == 10000) {
+                                    SharedPreferences noteuser = getSharedPreferences("NOTE", MODE_PRIVATE);
+                                    SharedPreferences.Editor edit = noteuser.edit();
+                                    edit.putString("userInfo", ((JSONObject) resultBean.getData()).toJSONString());
+                                    edit.apply();
+                                    runOnUiThread(() -> {
+                                        intent(MainActivity.class);
+                                    });
+                                } else {
+                                    toast(resultBean.getMsg());
+                                }
+                            }
 
-                        @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                            runOnUiThread(() -> {
-                                Toast.makeText(LoginActivity.this,
-                                        e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
-                        }
-                    });
-                    runOnUiThread(() -> {
-                        if (resultBean.getStatusCodeValue() == 200) {
-                            intent(MainActivity.class);
-                        } else {
-                            Toast.makeText(LoginActivity.this,
-                                    resultBean.getBody().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                toast(e.getMessage());
+                            }
+                        });
+                    } else {
+                        toast(resultBean.getMsg());
+                    }
                 }
             });
         });
@@ -111,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         forgetPasswordButton.setOnClickListener(v -> {
-            Toast.makeText(LoginActivity.this, "暂不支持此功能", Toast.LENGTH_LONG).show();
+            toast("暂不支持此功能");
         });
     }
 
@@ -119,6 +116,13 @@ public class LoginActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             Intent intent = new Intent(LoginActivity.this, target);
             startActivity(intent);
+        });
+    }
+
+    private void toast(String msg) {
+        runOnUiThread(() -> {
+            Toast.makeText(LoginActivity.this,
+                    msg, Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -2,31 +2,31 @@ package top.devonte.note.bean;
 
 public class ResultBean<T> {
 
-    private T body;
-    private Integer statusCodeValue;
-    private String statusCode;
+    private T data;
+    private Integer code;
+    private String msg;
 
-    public T getBody() {
-        return body;
+    public T getData() {
+        return data;
     }
 
-    public void setBody(T body) {
-        this.body = body;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public Integer getStatusCodeValue() {
-        return statusCodeValue;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setStatusCodeValue(Integer statusCodeValue) {
-        this.statusCodeValue = statusCodeValue;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    public String getStatusCode() {
-        return statusCode;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

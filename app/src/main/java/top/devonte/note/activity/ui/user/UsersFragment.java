@@ -35,7 +35,6 @@ public class UsersFragment extends BaseFragment<UsersPresenter> implements IUser
 
     private static final String TAG = "UsersFragment";
 
-
     private ImageView avatarWidget;
     private TextView usernameWidget;
     private TextView joinTimeWidget;

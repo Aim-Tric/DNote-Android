@@ -4,6 +4,8 @@ import android.os.Build;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +22,7 @@ import okhttp3.Response;
 import top.devonte.note.base.BaseCallBack;
 import top.devonte.note.base.IPresenter;
 import top.devonte.note.bean.FileBean;
+import top.devonte.note.bean.ResultBean;
 import top.devonte.note.constant.ApiConstants;
 import top.devonte.note.util.HttpUtils;
 import top.devonte.note.view.IFileListView;
@@ -46,44 +49,49 @@ public class FilePresenter implements IPresenter {
             public void onResponse(@NotNull Call call, @NotNull Response response)
                     throws IOException {
                 String jsonStr = response.body().string();
-                List<FileBean> resultBean = JSON.parseArray(jsonStr, FileBean.class);
-                LinkedList<FileBean> newResultBean = new LinkedList<>();
-                if (folderId > 0) {
-                    if (history.size() > 0) {
-                        if (folderId == history.getLast()) {
-                            history.pollLast();
-                        } else if (currentFolder != 0) {
-                            history.addLast(currentFolder);
+                ResultBean result = JSON.parseObject(jsonStr, ResultBean.class);
+                if (result.getCode() == 10000) {
+                    List<FileBean> resultBean = ((JSONArray) result.getData()).toJavaList(FileBean.class);
+                    LinkedList<FileBean> newResultBean = new LinkedList<>();
+                    if (folderId > 0) {
+                        if (history.size() > 0) {
+                            if (folderId == history.getLast()) {
+                                history.pollLast();
+                            } else if (currentFolder != 0) {
+                                history.addLast(currentFolder);
+                            }
                         }
+                        FileBean goBack = new FileBean();
+                        goBack.setTitle("返回上一级");
+                        goBack.setFoldered(true);
+                        goBack.setId(history.getLast());
+                        newResultBean.add(goBack);
+                        newResultBean.addAll(resultBean);
+                        resultBean = newResultBean;
                     }
-                    FileBean goBack = new FileBean();
-                    goBack.setTitle("返回上一级");
-                    goBack.setFoldered(true);
-                    goBack.setId(history.getLast());
-                    newResultBean.add(goBack);
-                    newResultBean.addAll(resultBean);
-                    resultBean = newResultBean;
+                    currentFolder = folderId;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        resultBean.sort((o1, o2) -> {
+                            if ("返回上一级".equals(o1.getTitle())) {
+                                return -1;
+                            }
+                            if ("返回上一级".equals(o2.getTitle())) {
+                                return 1;
+                            }
+                            if (o1.isFoldered()) {
+                                return -1;
+                            }
+                            if (o2.isFoldered()) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                    }
+                    view.flushList(resultBean);
+                    view.loadComplete();
+                } else {
+                    view.toast(result.getMsg());
                 }
-                currentFolder = folderId;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    resultBean.sort((o1, o2) -> {
-                        if ("返回上一级".equals(o1.getTitle())) {
-                            return -1;
-                        }
-                        if ("返回上一级".equals(o2.getTitle())) {
-                            return 1;
-                        }
-                        if (o1.isFoldered()) {
-                            return -1;
-                        }
-                        if (o2.isFoldered()) {
-                            return 1;
-                        }
-                        return 0;
-                    });
-                }
-                view.flushList(resultBean);
-                view.loadComplete();
             }
         });
     }
@@ -96,9 +104,10 @@ public class FilePresenter implements IPresenter {
         HttpUtils.put(ApiConstants.RESTFUL_FILE_API, JSON.toJSONString(datas), new BaseCallBack<IView>(view) {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String data = response.body().string();
+                String json = response.body().string();
+                ResultBean result = JSON.parseObject(json, ResultBean.class);
                 loadData(currentFolder);
-                view.toast(data);
+                view.toast(result.getMsg());
             }
         });
     }
@@ -116,7 +125,8 @@ public class FilePresenter implements IPresenter {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String json = response.body().string();
-                FileBean file = JSON.parseObject(json, FileBean.class);
+                ResultBean result = JSON.parseObject(json, ResultBean.class);
+                FileBean file = ((JSONObject) result.getData()).toJavaObject(FileBean.class);
                 view.flushList(file);
                 view.toast("未命名文件创建成功");
             }
@@ -127,14 +137,12 @@ public class FilePresenter implements IPresenter {
         HttpUtils.delete(ApiConstants.RESTFUL_FILE_API + "/" + id, new BaseCallBack<IView>(view) {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String json = response.body().string();
+                ResultBean result = JSON.parseObject(json, ResultBean.class);
                 view.deleteItem(id);
-                view.toast(response.body().string());
+                view.toast(result.getMsg());
             }
         });
-    }
-
-    public int getCurrentFolder() {
-        return currentFolder;
     }
 
 }

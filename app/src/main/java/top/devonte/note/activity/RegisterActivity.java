@@ -28,6 +28,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.devonte.note.R;
 import top.devonte.note.bean.FileBean;
+import top.devonte.note.bean.ResultBean;
 import top.devonte.note.bean.UserBean;
 import top.devonte.note.constant.ApiConstants;
 import top.devonte.note.util.HttpUtils;
@@ -67,16 +68,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        runOnUiThread(() -> Toast.makeText(RegisterActivity.this,
-                                e.getMessage(), Toast.LENGTH_SHORT).show());
+                        toast(e.getMessage());
                     }
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        runOnUiThread(() -> {
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        });
+                        ResultBean result = JSON.parseObject(response.body().string(), ResultBean.class);
+                        toast(result.getMsg());
+                        if (result.getCode() == 10000) {
+                            runOnUiThread(() -> {
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            });
+                        }
                     }
                 });
             }
@@ -152,6 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * 检查所有的输入框是否满足要求
+     *
      * @return 满足要求 true， 否则为 false
      */
     private boolean checkForm() {
@@ -164,6 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * 将表单内的内容封装成 UserBean 对象
+     *
      * @return 表单对应 UserBean 对象
      */
     private UserBean convertBean() {
